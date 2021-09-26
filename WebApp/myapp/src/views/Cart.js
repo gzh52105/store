@@ -17,16 +17,26 @@ class Test extends React.Component {
   onChange1 = (i) => {
     if(this.state.ifdelete===false){
       this.setState({
-        ifdelete:true,
-        deletelist:this.state.datalist.filter(it=>it!==i)
+        datalist:this.state.datalist.filter(it=>it!==i),
+        ifdelete:true
       })
-      // console.log("asdasd",i);
+      console.log("asdasd",this.state.deletelist);
+      const username=localStorage.getItem('username')
+      axios.post('http://120.78.176.155:7777/cart/',{
+        username,
+        goodslist:this.state.datalist
+      })
     }
     if(this.state.ifdelete===true){
       this.setState({
         ifdelete:false,
       })
-      // console.log("adsdasd");
+      console.log("adsdasd");
+      const username=localStorage.getItem('username')
+      axios.post('http://120.78.176.155:7777/cart/',{
+        username,
+        goodslist:this.state.datalist
+      })
     }
   }
   onChange = (val) => {
@@ -53,23 +63,33 @@ class Test extends React.Component {
         });
         })
     })
-
 }
-delete=()=>{
-  if(this.state.deletelist.length!==0){
-    const username=localStorage.getItem('username')
-    axios.post('http://120.78.176.155:7777/cart/',{
-      username,
-      goodslist:this.state.deletelist
-    })
-    this.setState({
-      datalist:this.state.deletelist
-    })
-  }
-}
+// delete=()=>{
+//   console.log(this.state.deletelist);
+//   if(this.state.deletelist.length>1 ||this.state.deletelist===true){
+//     const username=localStorage.getItem('username')
+//     axios.post('http://120.78.176.155:7777/cart/',{
+//       username,
+//       goodslist:this.state.deletelist
+//     })
+//     this.setState({
+//       datalist:this.state.deletelist
+//     })
+//   }
+//   if(this.state.datalist.length===1 ||this.state.deletelist===true){
+//     const username=localStorage.getItem('username')
+//     axios.post('http://120.78.176.155:7777/cart/',{
+//       username,
+//       goodslist:[]
+//     })
+//     this.setState({
+//       datalist:[]
+//     })
+//   }
+// }
 
 finish=()=>{
-  console.log(this.state.deletelist);
+  console.log(this.state.datalist,this.state.ifdelete,this.state.deletelist);
 }
 componentDidMount() {
     this.getdata()
@@ -78,7 +98,6 @@ componentDidMount() {
     const data =this.state.datalist;
     return (<div >
       <List renderHeader={() => '我的购物车'}>
-      {<Button type="warning" size="small" inline style={{marginLeft:50,marginTop:10,zIndex:101}} onClick={this.delete}>删除</Button>}
       {<Button type="primary" size="small" inline style={{marginLeft:130,marginTop:10,zIndex:101}} onClick={this.finish}>结算</Button>}
         {data.map(i => (
           <CheckboxItem key={i.id} onChange={() => this.onChange1(i)} style={{display:'flex'} }>
