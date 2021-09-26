@@ -22,10 +22,17 @@ class Test extends React.Component {
       })
       console.log("asdasd",this.state.deletelist);
       const username=localStorage.getItem('username')
-      axios.post('http://120.78.176.155:7777/cart/',{
+      if(this.state.datalist.length===1){
+        axios.post('http://120.78.176.155:7777/cart/',{
+        username,
+        goodslist:[]
+      })
+      }else{
+        axios.post('http://120.78.176.155:7777/cart/',{
         username,
         goodslist:this.state.datalist
       })
+      } 
     }
     if(this.state.ifdelete===true){
       this.setState({
@@ -33,11 +40,19 @@ class Test extends React.Component {
       })
       console.log("adsdasd");
       const username=localStorage.getItem('username')
-      axios.post('http://120.78.176.155:7777/cart/',{
+      if(this.state.datalist.length===1){
+        axios.post('http://120.78.176.155:7777/cart/',{
+        username,
+        goodslist:[]
+      })
+      }else{
+        axios.post('http://120.78.176.155:7777/cart/',{
         username,
         goodslist:this.state.datalist
       })
+      } 
     }
+    
   }
   onChange = (val) => {
     
