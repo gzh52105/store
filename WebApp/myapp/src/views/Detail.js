@@ -31,7 +31,7 @@ class Detail extends React.Component {
                     <span>{this.state.data.title}</span>
                 </Card.Body>
                 <Card.Footer content={'￥' + this.state.data.real_wap_price} extra={<div>{this.state.data.month_sale}</div>} />
-                <Button>加入购物车</Button>
+                <Button style={{zIndex:1000}} onClick={()=>{this.props.history.push('/cart')}}>加入购物车</Button>
             </Card>
 
         )
