@@ -5,17 +5,35 @@ class Detail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: {}
+            data: {},
+            datalist: []
         }
 
     }
 
+
+    upload = (data) => {
+     
+        this.setState({
+            datalist:[...this.state.datalist,data]
+        }, () => {
+            const username = localStorage.getItem('username')
+            axios.post('http://120.78.176.155:7777/cart/', {
+                username,
+                goodslist: this.state.datalist
+            })
+
+        })
+
+
+    }
     componentDidMount() {
         console.log(this.props.location.pathname);
         const res = this.props.location.pathname.split('=')
         axios.get('http://120.78.176.155:7777/good?sellerId=' + res[1]).then(data => {
             this.setState({
-                data: data.data[0]
+                data: data.data[0],
+
             })
         })
     }
@@ -31,7 +49,7 @@ class Detail extends React.Component {
                     <span>{this.state.data.title}</span>
                 </Card.Body>
                 <Card.Footer content={'￥' + this.state.data.real_wap_price} extra={<div>{this.state.data.month_sale}</div>} />
-                <Button style={{zIndex:1000}} onClick={()=>{this.props.history.push('/cart')}}>加入购物车</Button>
+                <Button style={{ zIndex: 1000 }} onClick={this.upload.bind(null, this.state.data)}>加入购物车</Button>
             </Card>
 
         )
