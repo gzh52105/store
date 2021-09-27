@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Card, Pagination, SearchBar } from 'antd-mobile';
+import { Card, Pagination, SearchBar,Icon } from 'antd-mobile';
 
 
 
@@ -11,8 +11,9 @@ class Home extends React.Component {
         super(props)
         this.state = {
             datalist: [],
-            pagenum: 6,
-            total: 92
+            pagenum: 1,
+            total: 92,
+            value: ''
         };
     }
     getdata = () => {
@@ -22,9 +23,7 @@ class Home extends React.Component {
             });
             console.log(data)
         })
-
     }
-
     onChange = (value) => {
         this.setState({ value }, () => { this.getdata() })
     }
@@ -32,41 +31,32 @@ class Home extends React.Component {
 
         this.getdata()
     }
-
-
     render() {
-        const locale = {
-            prevText: 'Prev',
-            nextText: 'Next',
-        };
+
         return (
             <div>
-
-                <div className="pagination-container" >
-                    <Pagination total={5} current={1} locale={locale} />
+                <div className="pagination-container"  >
+                    <Pagination  total={this.state.total} current={this.state.pagenum} locale={{
+                        prevText: 'Prev',
+                        nextText: 'Next',
+                    }} />
                 </div>
-
                 <SearchBar
                     value={this.state.value}
                     placeholder="请输入你需要的商品"
-
                     showCancelButton
                     onChange={this.onChange}
                 />
-
                 {this.state.datalist.map(item => <Card key={item.id}>
                     <Card.Header
-
                         extra={<span>{item.category}</span>}
                     />
-                    <Card.Body >
+                    <Card.Body onClick={()=>{this.props.history.push('/detail/sellerId='+item.sellerId)}}>
                         <img style={{ height: '65px', marginRight: '15px' }} src={'http://120.78.176.155:7777' + item.pict_url} alt="" />
                         <span>{item.title}</span>
                     </Card.Body>
                     <Card.Footer content={'￥' + item.real_wap_price} extra={<div>{item.month_sale}</div>} />
                 </Card>)}
-
-
             </div>
         )
     }
@@ -74,6 +64,7 @@ class Home extends React.Component {
 
 
 }
+
 
 
 export default Home

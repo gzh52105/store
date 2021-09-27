@@ -46,7 +46,7 @@ class Category extends React.Component {
 
                         extra={<span>{item.category}</span>}
                     />
-                    <Card.Body >
+                    <Card.Body onClick={()=>{this.props.history.push('/detail/sellerId='+item.sellerId)}} >
                         <img style={{ height: '100px', marginRight: '15px' }} src={'http://120.78.176.155:7777' + item.pict_url} alt="" />
                         <span>{item.title}</span>
                     </Card.Body>
