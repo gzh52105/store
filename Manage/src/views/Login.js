@@ -23,8 +23,8 @@ class Login extends React.Component{
             message.error('用户名或密码不正确')
         }
     }
-    componentDidMount(){
-        if(this.props.userInfo.username){
+    componentWillMount(){
+        if(this.props.userInfo){
             this.props.history.replace('/manage/home')
         }
     }

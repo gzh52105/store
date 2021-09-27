@@ -34,12 +34,8 @@ class List extends React.PureComponent {
             var rObj = obj.username;
             return rObj;
         })
-        // console.log("totalUsername", totalUsername);
-        // request.get('/userlist').then(({ data }) => {
-        //     console.log('data=', { data })
         this.setState({
             datalist: totalUsername,
-            // total: data.total
         })
     }
     addItem = () => {
@@ -47,13 +43,6 @@ class List extends React.PureComponent {
     }
 
     submit = async (values) => {
-        // this.props.history.push('/class/eidt/'+id);
-        // this.props.history.push({
-        //     pathname:'/class/eidt/'+id,
-        //     // 在react-router中query必须使用字符串形式
-        //     search:'id='+id,
-        // });
-        // console.log("values=",values.username);
         //传入username、newuser、newpsw 参数名称必须与接口一致
         const { row } = this.state;
         const username = row
@@ -61,13 +50,18 @@ class List extends React.PureComponent {
         const newpsw = values.password;
         // console.log(row,newuser,newpsw);
         const data = await request.put('/userlist', { username, newuser, newpsw })
-        // console.log('data=',data);
+        console.log('data=',data); 
+        this.setState({
+            isModalVisible: false,
+        
+        })
+        window.location.reload()
     }
-    showModal = async (id) => {
-        // console.log("id",id);
+    showModal = async (iddata) => {
+        console.log("iddata=",iddata);
         this.setState({
             isModalVisible: true,
-            row: id
+            row: iddata
         })
     };
     hideModal = () => {
@@ -140,6 +134,7 @@ class List extends React.PureComponent {
     componentDidMount() {
         this.getData();
     }
+
     render(row) {
         const { datalist, total, isModalVisible, initialValues } = this.state;
         const columns = [
@@ -261,7 +256,7 @@ class List extends React.PureComponent {
                             <Input.Password />
                         </Form.Item>
                         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                            <Button type="primary" htmlType="submit" onClick={this.editItem}>
+                            <Button type="primary" htmlType="submit" onClick={this.submit}>
                                 确认修改
                             </Button>
                         </Form.Item>

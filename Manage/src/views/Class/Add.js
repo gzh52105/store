@@ -41,25 +41,7 @@ class Add extends React.Component{
     }
 
     componentDidMount(){
-        // request.get('/category',{
-        //     total:false,
-        //     size:100
-        // }).then(data=>{
-        //     console.log('category',data)
-        //     this.setState({
-        //         subjectList:data.data
-        //     })
-        // })
 
-        // request.get('/city',{
-        //     total:false,
-        //     size:100
-        // }).then(data=>{
-        //     console.log('city',data);
-        //     this.setState({
-        //         cities:data.data
-        //     })
-        // })
     }
     render () {
         const {initialValues} = this.state;

@@ -23,7 +23,7 @@ class App extends React.Component{
         if(!userInfo){
             userInfo = {}
         }
-        const islogin = !!userInfo._id
+        const islogin = !!userInfo.nameuser
         return(
             <Switch>
                 <Route path="/login" component={login} />
